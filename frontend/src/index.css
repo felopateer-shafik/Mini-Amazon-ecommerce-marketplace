@@ -1,0 +1,336 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #c4784a;
+  --color-primary-dark: #a85e35;
+  --color-primary-light: #e8d5bb;
+  --color-secondary: #2b1d13;
+  --color-secondary-dark: #1c1008;
+  --color-secondary-light: #3d2b1f;
+  --color-accent: #a79277;
+  --color-success: #7a9e7e;
+  --color-warning: #f5a623;
+  --color-danger: #c0504a;
+  --color-info: #7a6254;
+  --color-surface: #ffffff;
+  --color-surface-alt: #fdfaf6;
+  --color-border: #c8b09a;
+  --color-text: #1c1008;
+  --color-text-secondary: #7a6254;
+  --color-text-light: #a79277;
+  --font-sans: "Amazon Ember", "Helvetica Neue", Arial, sans-serif;
+}
+
+/* All base/reset CSS must live inside @layer base so that
+   Tailwind utility classes (which live in @layer utilities)
+   can override them in the CSS cascade. Unlayered styles
+   would silently defeat every utility regardless of specificity. */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    color-scheme: light;
+    overflow-x: hidden;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-text);
+    background-color: var(--color-surface-alt);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  #root {
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  img,
+  svg,
+  video,
+  canvas {
+    max-width: 100%;
+    display: block;
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+    color: inherit;
+  }
+
+  /* Cursor pointer on all interactive elements */
+  a,
+  button,
+  [role="button"],
+  [type="button"],
+  [type="submit"],
+  [type="reset"],
+  select,
+  label[for],
+  summary,
+  [onclick],
+  .cursor-pointer {
+    cursor: pointer;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-text-fill-color: var(--color-text);
+    transition: background-color 9999s ease-in-out;
+    -webkit-box-shadow: inset 0 0 0 1000px #fff;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+}
+
+/* ───── RTL Support (Arabic) ───── */
+@layer base {
+  [dir="rtl"] {
+    text-align: right;
+  }
+  [dir="rtl"] .flex-row-reverse-rtl {
+    flex-direction: row-reverse;
+  }
+}
+
+/* RTL overrides for common Tailwind utilities */
+@layer utilities {
+  /* Table headers: text-left should follow reading direction */
+  [dir="rtl"] th.text-left {
+    text-align: right;
+  }
+}
+
+@layer utilities {
+  /* Logical margin/padding helpers */
+  .ms-auto {
+    margin-inline-start: auto;
+  }
+  .me-auto {
+    margin-inline-end: auto;
+  }
+
+  /* custome settings */
+  .flex-wrap {
+    flex-wrap: wrap;
+  }
+  .gorw-1 {
+    flex-grow: 1;
+  }
+  .justify-end {
+    justify-content: end;
+  }
+  .justify-center {
+    justify-content: center;
+  }
+  .justify-around {
+    justify-content: space-around;
+  }
+  .justify-between {
+    justify-content: space-between;
+  }
+  .width-200 {
+    min-width: 200px;
+  }
+  .width-140 {
+    min-width: 140px;
+  }
+  .width-100 {
+    min-width: 100px;
+  }
+  .full-width {
+    min-width: 100%;
+  }
+  .width-5rem {
+    min-width: 5rem;
+  }
+  .width-8rem {
+    min-width: 8rem;
+  }
+  .width-18rem {
+    min-width: 18rem;
+  }
+  .width-max-content {
+    min-width: max-content;
+  }
+  .width-fit-content {
+    max-width: fit-content;
+  }
+  .max-width-45px {
+    max-width: 45px;
+  }
+  .max-width-170 {
+    max-width: 170px;
+  }
+  .min-width-45px {
+    min-width: 45px;
+  }
+  .text-center {
+    text-align: center;
+  }
+
+  .align-center {
+    align-items: center;
+  }
+
+  .flex-column {
+    flex-direction: column;
+  }
+
+  /* Flip icons in RTL */
+  [dir="rtl"] .rtl\:flip {
+    transform: scaleX(-1);
+  }
+
+  /* Skeleton shimmer animation */
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  .animate-shimmer {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+  }
+
+  /* Smooth page transitions */
+  .page-enter {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  .page-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity 200ms ease-out,
+      transform 200ms ease-out;
+  }
+
+  /* Hide scrollbar but keep scroll functionality */
+  .scrollbar-hidden {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Cart popup animation */
+  @keyframes cartPopIn {
+    0% {
+      opacity: 0;
+      transform: translateY(8px) scale(0.9);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  .animate-cart-pop {
+    animation: cartPopIn 0.25s ease-out;
+  }
+
+  /* Dropdown enter animation */
+  @keyframes dropdownIn {
+    0% {
+      opacity: 0;
+      transform: translateY(-4px) scale(0.97);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  .animate-dropdown-in {
+    animation: dropdownIn 0.15s ease-out;
+  }
+
+  /* Modal entrance animation */
+  @keyframes modalIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.95) translateY(8px);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+  .animate-modal-in {
+    animation: modalIn 0.2s ease-out;
+  }
+
+  @keyframes modalOut {
+    0% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(0.95) translateY(8px);
+    }
+  }
+  .animate-modal-out {
+    animation: modalOut 0.18s ease-in forwards;
+  }
+
+  /* Modal backdrop fade */
+  @keyframes modalBackdrop {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  .animate-modal-backdrop {
+    animation: modalBackdrop 0.2s ease-out;
+  }
+
+  @keyframes modalBackdropOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  .animate-modal-backdrop-out {
+    animation: modalBackdropOut 0.18s ease-in forwards;
+  }
+}

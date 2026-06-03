@@ -1,0 +1,1 @@
+import{a as i}from"./index-3pwpzVpe.js";function u(){const r=i(s=>s.user),e=r?.is_system_admin===!0,t=new Set(Array.isArray(r?.permissions)?r.permissions.map(s=>String(s).toLowerCase()):[]);return{user:r,isSystemAdmin:e,hasPerm:(...s)=>e?!0:s.some(n=>t.has(n))}}export{u};
